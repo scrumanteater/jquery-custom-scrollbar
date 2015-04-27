@@ -6,7 +6,6 @@
       skin: undefined,
       hScroll: true,
       vScroll: true,
-      updateOnWindowResize: false,
       animationSpeed: 300,
       onCustomScroll: undefined,
       swipeSpeed: 1,
@@ -77,10 +76,6 @@
       removeScrollbarComponents: function () {
         this.removeScrollbar("vertical");
         this.removeScrollbar("horizontal");
-        if (this.overviewAdded)
-          this.$element.unwrap();
-        if (this.viewPortAdded)
-          this.$element.unwrap();
       },
 
       removeScrollbar: function (orientation) {
@@ -209,7 +204,6 @@
       this.initMouseWheelScrolling();
       this.initTouchScrolling();
       this.initMouseClickScrolling();
-      this.initWindowResize();
     }
 
     Scrollbar.prototype = {
@@ -333,20 +327,6 @@
 
       removeMouseClickScrolling: function () {
         this.$scrollBar.unbind("click", this.scrollBarClick);
-      },
-
-      initWindowResize: function () {
-        if (this.scrollable.options.updateOnWindowResize) {
-          var _this = this;
-          this.windowResize = function () {
-            _this.resize();
-          };
-          $(window).resize(this.windowResize);
-        }
-      },
-
-      removeWindowResize: function () {
-        $(window).unbind("resize", this.windowResize);
       },
 
       isKeyScrolling: function (key) {
@@ -555,7 +535,6 @@
         this.removeMouseWheelScrolling();
         this.removeTouchScrolling();
         this.removeMouseClickScrolling();
-        this.removeWindowResize();
       },
 
       stopEventConditionally: function (event, condition) {
